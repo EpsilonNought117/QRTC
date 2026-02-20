@@ -40,7 +40,7 @@ vec3 operator*(const vec3& v, float t);
 vec3 operator/(const vec3& v, float t);
 
 // Vector ops
-double dot(const vec3& u, const vec3& v);
+float dot(const vec3& u, const vec3& v);
 vec3 cross(const vec3& u, const vec3& v);
 vec3 unit_vector(const vec3& v);
 

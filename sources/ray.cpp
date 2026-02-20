@@ -27,7 +27,7 @@ const vec3& ray::direction() const
 // Evaluate point along ray
 // --------------------------------------------------
 
-point3 ray::at(double t) const
+point3 ray::at(float t) const
 {
     return orig + t * dir;
 }

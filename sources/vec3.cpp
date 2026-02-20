@@ -89,7 +89,7 @@ vec3 operator/(const vec3& v, float t)
 
 // ================= Vector math =================
 
-double dot(const vec3& u, const vec3& v)
+float dot(const vec3& u, const vec3& v)
 {
     return u.x * v.x + u.y * v.y + u.z * v.z;
 }

@@ -17,7 +17,7 @@ float hit_sphere(const point3& center, float radius, const ray& r)
     }
     else 
     {
-        return (h - std::sqrt(discriminant)) / a;
+        return (h - std::sqrtf(discriminant)) / a;
     }
 }
 
