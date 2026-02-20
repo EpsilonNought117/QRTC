@@ -6,12 +6,10 @@
 float hit_sphere(const point3& center, float radius, const ray& r)
 {
     vec3 oc = center - r.origin();
-
-    auto a = dot(r.direction(), r.direction());
-    auto b = -2.0f * dot(r.direction(), oc);
-    auto c = dot(oc, oc) - radius*radius;
-    
-    auto discriminant = b*b - 4.0f * a * c;
+    auto a = r.direction().length_squared();
+    auto h = dot(r.direction(), oc);
+    auto c = oc.length_squared() - radius*radius;
+    auto discriminant = h*h - a*c;
 
     if (discriminant < 0)
     {
@@ -19,7 +17,7 @@ float hit_sphere(const point3& center, float radius, const ray& r)
     }
     else 
     {
-        return (-b - std::sqrt(discriminant) ) / (2.0f * a);
+        return (h - std::sqrt(discriminant)) / a;
     }
 }
 
