@@ -1,29 +1,14 @@
-#ifndef HITTABLE_H
-#define HITTABLE_H
+#ifndef HITTABLE_HPP
+#define HITTABLE_HPP
 
-#include "ray.hpp"
+#include "qrtc.hpp"
+#include "hit_record.hpp"
 #include "sphere.hpp"
-
-// Hit record
-struct hit_record
-{
-    point3 p;
-    vec3 normal;
-    float t;
-};
 
 // Enum for type tagging
 enum hittable_type
 {
-    HITTABLE_SPHERE = 0,
-    HITTABLE_CUBE = 1
-};
-
-// Concrete object: sphere
-struct sphere
-{
-    point3 center;
-    float radius;
+    HITTABLE_SPHERE = 0
 };
 
 // Tagged union
@@ -33,27 +18,32 @@ struct hittable
 
     union
     {
-        sphere sph;
+        sphere s;
         // add more types later
     };
-};
 
-inline bool hit(
-    const hittable& obj,
-    const ray& r,
-    float tmin,
-    float tmax,
-    hit_record& rec
-)
-{
-    switch (obj.type)
+    // Constructors
+    hittable(const sphere& sph) : type(HITTABLE_SPHERE), s(sph) {}
+
+    // Destructor (important for unions with non-trivial types later)
+    ~hittable() {}
+
+    inline bool hit(
+        const ray& r,
+        float tmin,
+        float tmax,
+        hit_record& rec
+    ) const
     {
-        case HITTABLE_SPHERE:
-            return hit_sphere(obj.sph, r, tmin, tmax, rec);
+        switch (type)
+        {
+            case HITTABLE_SPHERE:
+                return s.hit(r, tmin, tmax, rec);
 
-        default:
-            return false;
+            default:
+                return false;
+        }
     }
-}
+};
 
 #endif
