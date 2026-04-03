@@ -2,6 +2,7 @@
 #include "hittable.hpp"
 #include "hittable_list.hpp"
 #include "sphere.hpp"
+#include "interval.hpp"
 #include "hit_record.hpp"
 #include <iostream>
 
@@ -9,7 +10,7 @@ inline color ray_color(const ray& r, const hittable_list& world)
 {
     hit_record rec;
 
-    if (world.hit(r, 0, infinity, rec))
+    if (world.hit(r, interval(0.0f, infinity), rec))
     {
         return 0.5 * (rec.normal + color(1,1,1));
     }

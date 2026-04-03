@@ -3,6 +3,7 @@
 
 #include "hit_record.hpp"
 #include "qrtc.hpp"
+#include "interval.hpp"
 #include <cmath>
 
 struct sphere
@@ -14,8 +15,7 @@ struct sphere
 
     inline bool hit(
         const ray& r,
-        float ray_tmin,
-        float ray_tmax,
+        interval ray_t,
         hit_record& rec
     ) const
     {
@@ -37,11 +37,11 @@ struct sphere
         // Find nearest valid root
         float root = (h - sqrtd) / a;
 
-        if (root <= ray_tmin || root >= ray_tmax)
+        if (!ray_t.surrounds(root))
         {
             root = (h + sqrtd) / a;
 
-            if (root <= ray_tmin || root >= ray_tmax)
+            if (!ray_t.surrounds(root))
             {
                 return false;
             }

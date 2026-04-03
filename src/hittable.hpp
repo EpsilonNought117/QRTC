@@ -4,6 +4,7 @@
 #include "qrtc.hpp"
 #include "hit_record.hpp"
 #include "sphere.hpp"
+#include "interval.hpp"
 
 // Enum for type tagging
 enum hittable_type
@@ -28,17 +29,16 @@ struct hittable
     // Destructor (important for unions with non-trivial types later)
     ~hittable() {}
 
-    inline bool hit(
+    bool hit(
         const ray& r,
-        float tmin,
-        float tmax,
+        interval ray_t,
         hit_record& rec
     ) const
     {
         switch (type)
         {
             case HITTABLE_SPHERE:
-                return s.hit(r, tmin, tmax, rec);
+                return s.hit(r, ray_t, rec);
 
             default:
                 return false;
