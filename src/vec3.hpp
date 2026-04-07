@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include "qrtc.hpp"
 
 struct vec3
 {
@@ -54,6 +55,16 @@ struct vec3
     float length_squared() const
     {
         return x * x + y * y + z * z;
+    }
+
+    static vec3 random()
+    {
+        return vec3(random_float(), random_float(), random_float());
+    }
+
+    static vec3 random(double min, double max)
+    {
+        return vec3(random_float(min,max), random_float(min,max), random_float(min,max));
     }
 };
 
