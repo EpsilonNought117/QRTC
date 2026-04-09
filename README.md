@@ -1,1 +1,1 @@
-# QRTC
+# CocoBean - A Fast CPU Based Ray Tracer

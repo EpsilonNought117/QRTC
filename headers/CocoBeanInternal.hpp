@@ -1,15 +1,19 @@
-#ifndef QRTC_HPP
-#define QRTC_HPP
+#ifndef COCOBEAN_INTERNAL_HPP
+#define COCOBEAN_INTERNAL_HPP
 
+// C++ Standard Headers
 #include <iostream>
-#include <cstdint>
-#include <cmath>
+#include <memory>
 #include <fstream>
 #include <thread>
 #include <atomic>
 
+// C Standard headers
+#include <cstdint>
+#include <cmath>
+
 /****************************************************************************************************/
-/******************   COMPILER SPECIFIC HEADERS AND DLL/STATIC IMPORT/EXPORTS    ********************/
+/**************************   COMPILER, OS and CPU-ISA SPECIFIC HEADERS   ***************************/
 /****************************************************************************************************/
 
 #if defined(_WIN32)
@@ -20,29 +24,19 @@
         
             #include <immintrin.h>
             #include <intrin.h>
+            #define COCOBEAN_X64
         
         #elif defined(_M_ARM64) || defined(_M_ARM64EC)
         
             // TODO
+            #define COCOBEAN_ARM64
         
         #else
-            #error "Unsupported Architecture on Windows and MSVC!"
+            #error "Unsupported CPU ISA on Windows and MSVC (Clang-cl can be used too)!"
         #endif
     
     #else
         #error "Unknown Compiler on Windows!"
-    #endif
-
-    #if defined(QRTC_BUILD_SHARED_LIB)
-
-        #define QRTC_API __declspec(dllexport)
-    
-    #elif defined(QRTC_SHARED)
-    
-        #define QRTC_API __declspec(dllimport)
-
-    #else
-        #define QRTC_API
     #endif
 
 #elif defined(__linux__) || defined(__linux)   || \
@@ -56,35 +50,30 @@
         
             #include <cpuid.h>
             #include <immintrin.h>
+            #define COCOBEAN_X64
         
         #elif defined(__aarch64__) || defined(__arm64__)
         
             #include <arm_acle.h>
             #include <arm_neon.h>
+            #define COCOBEAN_ARM64
         
         #else
-            #error "Unsupported Architecture on Linux/Unix/macOS and GCC/Clang!"
+            #error "Unsupported CPU ISA on Linux/Unix/macOS and GCC/Clang!"
         #endif
 
     #else
         #error "Unknown Compiler on Linux/Unix/macOS!"
     #endif
 
-    #if defined(QRTC_BUILD_SHARED_LIB)
-    
-        #define QRTC_API __attribute__((visibility("default")))
-    
-    #else
-        #define QRTC_API
-    #endif
-
 #else
     #error "Unknown Platform!"
 #endif
 
-namespace QRTC
-{
-    
-}
+#if defined(CB_F64)
+    using CBFloat = double;
+#else
+    using CBFloat = float;
+#endif
 
-#endif // QRTC_HPP
+#endif

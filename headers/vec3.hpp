@@ -1,43 +1,17 @@
-#ifndef QRTC_VEC3_HPP
-#define QRTC_VEC3_HPP
+#ifndef COCOBEAN_VEC3_HPP
+#define COCOBEAN_VEC3_HPP
 
-#include "../include/qrtc.hpp"
+#include "CocoBeanInternal.hpp"
 
-namespace QRTCInteral{
+/**
+ * Internal API Namespace
+ */
+namespace CocoBeanInteral{
 
-template <typename T>
-struct vec3
+struct Vec3
 {
-    T x, y, z;
-
-    
+    CBFloat x, y, z;
 };
-
-#if defined(QRTC_FLOAT32)
-
-#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_SSE2))
-
-
-
-#endif
-
-#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_AVX))
-
-#endif
-
-#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_AVX512F))
-
-#endif
-
-
-
-#elif defined(QRTC_FLOAT64)
-
-
-
-#else
-    #error "QRTC can only work with 64-bit or 32-bit floats!"
-#endif
 
 }
 
