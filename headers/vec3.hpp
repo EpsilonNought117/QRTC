@@ -15,11 +15,21 @@ struct vec3
 
 #if defined(QRTC_FLOAT32)
 
-#if defined(QRTC_AMD64_SSE2) || defined(QRTC_AMD64_DYNAMIC_DISPATCH)
+#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_SSE2))
 
 
 
 #endif
+
+#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_AVX))
+
+#endif
+
+#if (defined(QRTC_AMD64_DYNAMIC_DISPATCH) || defined(QRTC_AMD64_AVX512F))
+
+#endif
+
+
 
 #elif defined(QRTC_FLOAT64)
 
