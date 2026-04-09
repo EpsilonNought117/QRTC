@@ -82,4 +82,9 @@
     #error "Unknown Platform!"
 #endif
 
+namespace QRTC
+{
+    
+}
+
 #endif // QRTC_HPP

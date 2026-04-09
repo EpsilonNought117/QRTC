@@ -3,12 +3,14 @@
 
 #include "../include/qrtc.hpp"
 
+namespace QRTCInteral{
+
 template <typename T>
 struct vec3
 {
     T x, y, z;
 
-
+    
 };
 
 #if defined(QRTC_FLOAT32)
@@ -27,6 +29,6 @@ struct vec3
     #error "QRTC can only work with 64-bit or 32-bit floats!"
 #endif
 
-
+}
 
 #endif
