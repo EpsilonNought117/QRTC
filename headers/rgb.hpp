@@ -1,11 +1,11 @@
-#ifndef TORPEDORAY_COLOR_HPP
-#define TORPEDORAY_COLOR_HPP
+#ifndef QRTC_RGB_HPP
+#define QRTC_RGB_HPP
 
-#include "TorpedoRayInternal.hpp"
+#include "qrtc_internal.hpp"
 
-namespace TorpedoRayInternal
+namespace qrtc_internal
 {
     
 }
 
-#endif // TORPEDORAY_COLOR_HPP
+#endif // QRTC_RGB_HPP

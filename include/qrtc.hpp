@@ -1,5 +1,5 @@
-#ifndef TORPEDORAY_INTERNAL_HPP
-#define TORPEDORAY_INTERNAL_HPP
+#ifndef QRTC_HPP
+#define QRTC_HPP
 
 // C++ Standard Headers
 #include <iostream>
@@ -24,12 +24,12 @@
         
             #include <immintrin.h>
             #include <intrin.h>
-            #define TORPEDORAY_X64
+            #define QRTC_X64
         
         #elif defined(_M_ARM64) || defined(_M_ARM64EC)
         
             // TODO
-            #define TORPEDORAY_ARM64
+            #define QRTC_ARM64
         
         #else
             #error "Unsupported CPU ISA on Windows and MSVC (Clang-cl can be used too)!"
@@ -37,6 +37,18 @@
     
     #else
         #error "Unknown Compiler on Windows!"
+    #endif
+
+    #if defined(QRTC_BUILD_SHARED_LIB)
+
+        #define QRTC_API __declspec(dllexport)
+    
+    #elif defined(QRTC_SHARED)
+    
+        #define QRTC_API __declspec(dllimport)
+
+    #else
+        #define QRTC_API
     #endif
 
 #elif defined(__linux__) || defined(__linux)   || \
@@ -50,13 +62,13 @@
         
             #include <cpuid.h>
             #include <immintrin.h>
-            #define TORPEDORAY_X64
+            #define QRTC_X64
         
         #elif defined(__aarch64__) || defined(__arm64__)
         
             #include <arm_acle.h>
             #include <arm_neon.h>
-            #define TORPEDORAY_ARM64
+            #define QRTC_ARM64
         
         #else
             #error "Unsupported CPU ISA on Linux/Unix/macOS and GCC/Clang!"
@@ -66,19 +78,21 @@
         #error "Unknown Compiler on Linux/Unix/macOS!"
     #endif
 
+    #if defined(QRTC_BUILD_SHARED_LIB)
+
+        #define QRTC_API __attribute__((visibility("default")))
+    
+    #else
+        #define QRTC_API
+    #endif
+
 #else
     #error "Unknown Platform!"
 #endif
 
-namespace TRInternal
+namespace qrtc
 {
-
-#if defined(TR_F64)
-    using TRFloat = double;
-#else
-    using TRFloat = float;
-#endif
-
+    
 }
 
-#endif // TORPEDORAY_INTERNAL_HPP
+#endif // QRTC_HPP

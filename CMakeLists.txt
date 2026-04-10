@@ -1,12 +1,12 @@
 #   O---------------------------------------------------------------------------O
 #   |                                                                           |
-#   |                       TORPEDORAY CMAKE BUILD FILE                         |
+#   |                         QRTC CMAKE BUILD FILE                              |
 #   |                                                                           |
 #   O---------------------------------------------------------------------------O
 
 cmake_minimum_required(VERSION 3.20)
 
-project(TorpedoRay)
+project(QRTC)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -19,7 +19,7 @@ endif()
 
 if (WIN32)
 
-    message(STATUS "Building TorpedoRay on 64-bit Windows")
+    message(STATUS "Building QRTC on 64-bit Windows")
 
     if (MSVC)
         if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -33,7 +33,7 @@ if (WIN32)
 
 elseif (APPLE)
 
-    message(STATUS "Building TorpedoRay on macOS")
+    message(STATUS "Building QRTC on macOS")
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         message(STATUS "Compiler: Clang (version ${CMAKE_CXX_COMPILER_VERSION})")
@@ -43,7 +43,7 @@ elseif (APPLE)
 
 elseif (UNIX)
 
-    message(STATUS "Building TorpedoRay on Unix/Linux")
+    message(STATUS "Building QRTC on Unix/Linux")
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         message(STATUS "Compiler: GCC (version ${CMAKE_CXX_COMPILER_VERSION})")
@@ -59,60 +59,51 @@ endif()
 
 # --- BUILD OPTIONS -------------------------------------------------------------
 
-option(TR_BUILD_SHARED_LIB "Build TorpedoRay as a shared library" OFF)
-option(TR_BUILD_EXAMPLES   "Build usage example programs"         OFF)
-
-option(TR_USE_FLOAT64 "Use double precision floating point instead of float32" OFF)
-
-if (TR_USE_FLOAT64)
-    message(STATUS "Precision: float64 (double)")
-    add_compile_definitions(TR_F64)
-else()
-    message(STATUS "Precision: float32 (single)")
-endif()
+option(QRTC_BUILD_SHARED_LIB "Build QRTC as a shared library" OFF)
+option(QRTC_BUILD_EXAMPLES   "Build usage example programs"   OFF)
 
 # --- ISA FLAGS -----------------------------------------------------------------
 
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64)$")
 
-    option(TR_AMD64_AVX     "Enable AVX code paths"      OFF)
-    option(TR_AMD64_AVX512F "Enable AVX-512F code paths" OFF)
-    option(TR_AMD64_DYNAMIC_DISPATCH "Runtime CPU dispatch" OFF)
+    option(QRTC_AMD64_AVX              "Enable AVX code paths"      OFF)
+    option(QRTC_AMD64_AVX512F          "Enable AVX-512F code paths" OFF)
+    option(QRTC_AMD64_DYNAMIC_DISPATCH "Runtime CPU dispatch"       OFF)
 
-    if (TR_AMD64_DYNAMIC_DISPATCH)
+    if (QRTC_AMD64_DYNAMIC_DISPATCH)
 
-        if (TR_AMD64_AVX OR TR_AMD64_AVX512F)
+        if (QRTC_AMD64_AVX OR QRTC_AMD64_AVX512F)
             message(FATAL_ERROR
-                "TR_AMD64_DYNAMIC_DISPATCH is ON — do not set TR_AMD64_AVX or TR_AMD64_AVX512F manually.")
+                "QRTC_AMD64_DYNAMIC_DISPATCH is ON — do not set QRTC_AMD64_AVX or QRTC_AMD64_AVX512F manually.")
         endif()
 
         message(STATUS "x86-64: Dynamic dispatch (SSE2 + AVX + AVX-512F)")
-        add_compile_definitions(TR_AMD64_DYNAMIC_DISPATCH)
+        add_compile_definitions(QRTC_AMD64_DYNAMIC_DISPATCH)
 
     else()
 
-        if (TR_AMD64_AVX AND TR_AMD64_AVX512F)
-            message(FATAL_ERROR "Only one of TR_AMD64_AVX / TR_AMD64_AVX512F may be enabled.")
+        if (QRTC_AMD64_AVX AND QRTC_AMD64_AVX512F)
+            message(FATAL_ERROR "Only one of QRTC_AMD64_AVX / QRTC_AMD64_AVX512F may be enabled.")
         endif()
 
-        if (TR_AMD64_AVX512F)
+        if (QRTC_AMD64_AVX512F)
             message(STATUS "x86-64: AVX-512F enabled")
-            add_compile_definitions(TR_AMD64_SSE2 TR_AMD64_AVX512F)
+            add_compile_definitions(QRTC_AMD64_SSE2 QRTC_AMD64_AVX512F)
 
-        elseif (TR_AMD64_AVX)
+        elseif (QRTC_AMD64_AVX)
             message(STATUS "x86-64: AVX enabled")
-            add_compile_definitions(TR_AMD64_SSE2 TR_AMD64_AVX)
+            add_compile_definitions(QRTC_AMD64_SSE2 QRTC_AMD64_AVX)
 
         else()
             message(STATUS "x86-64: SSE2 baseline")
-            add_compile_definitions(TR_AMD64_SSE2)
+            add_compile_definitions(QRTC_AMD64_SSE2)
         endif()
 
     endif()
 
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|ARM64)$")
 
-    option(TR_ARM64_DYNAMIC_DISPATCH "Runtime ARM64 dispatch" OFF)
+    option(QRTC_ARM64_DYNAMIC_DISPATCH "Runtime ARM64 dispatch" OFF)
 
     message(FATAL_ERROR "ARM64 path not implemented yet")
 
@@ -120,64 +111,65 @@ endif()
 
 # --- SOURCES -------------------------------------------------------------------
 
-set(TR_INTERNAL_SRC
+set(QRTC_INTERNAL_SRC
 )
 
-set(TR_INTERNAL_HEADERS
+set(QRTC_INTERNAL_HEADERS
+    headers/rgb.hpp
     headers/vec3.hpp
-    headers/TorpedoRayInternal.hpp
+    headers/qrtc_internal.hpp
 )
 
-set(TR_SOURCES
-    ${TR_INTERNAL_SRC}
-    ${TR_INTERNAL_HEADERS}
+set(QRTC_SOURCES
+    ${QRTC_INTERNAL_SRC}
+    ${QRTC_INTERNAL_HEADERS}
 )
 
 # --- LIBRARY -------------------------------------------------------------------
 
-if(TR_BUILD_SHARED_LIB)
-    add_library(TR SHARED ${TR_SOURCES})
-    message(STATUS "Building TorpedoRay as SHARED library")
-    target_compile_definitions(TR PRIVATE TR_BUILD_SHARED_LIB)
+if(QRTC_BUILD_SHARED_LIB)
+    add_library(QRTC SHARED ${QRTC_SOURCES})
+    message(STATUS "Building QRTC as SHARED library")
+    target_compile_definitions(QRTC PRIVATE QRTC_BUILD_SHARED_LIB)
 else()
-    add_library(TR STATIC ${TR_SOURCES})
-    message(STATUS "Building TorpedoRay as STATIC library")
+    add_library(QRTC STATIC ${QRTC_SOURCES})
+    message(STATUS "Building QRTC as STATIC library")
 endif()
 
-set(TR_TARGET TR)
+set(QRTC_TARGET QRTC)
 
 # --- CONFIG DEFINES ------------------------------------------------------------
 
-target_compile_definitions(${TR_TARGET} PRIVATE
-    $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:TR_DISABLE_ASSERT>
+target_compile_definitions(${QRTC_TARGET} PRIVATE
+    $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:QRTC_DISABLE_ASSERT>
 )
 
 # --- FILE PATH STRIPPING -------------------------------------------------------
 
 if (MSVC AND NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(${TR_TARGET} PRIVATE
+    target_compile_options(${QRTC_TARGET} PRIVATE
         $<$<COMPILE_LANGUAGE:CXX>:/d1trimfile:${CMAKE_SOURCE_DIR}/>
     )
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND MSVC)
-    target_compile_options(${TR_TARGET} PRIVATE
+    target_compile_options(${QRTC_TARGET} PRIVATE
         /clang:-ffile-prefix-map=${CMAKE_SOURCE_DIR}/=
     )
 
 else()
-    target_compile_options(${TR_TARGET} PRIVATE
+    target_compile_options(${QRTC_TARGET} PRIVATE
         -ffile-prefix-map=${CMAKE_SOURCE_DIR}/=
     )
 endif()
 
 # --- INCLUDES ------------------------------------------------------------------
 
-target_include_directories(${TR_TARGET} PUBLIC
+target_include_directories(${QRTC_TARGET} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # --- OUTPUT --------------------------------------------------------------------
 
-set_target_properties(${TR_TARGET} PROPERTIES
-    OUTPUT_NAME "tpdr"
+set_target_properties(${QRTC_TARGET} PROPERTIES
+    OUTPUT_NAME "qrtc"
 )

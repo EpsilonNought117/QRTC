@@ -1,1 +1,1 @@
-# TorpedoRay - A Fast CPU Based Ray Tracer
+# QRTC - Quick Ray Tracer for CPUs
