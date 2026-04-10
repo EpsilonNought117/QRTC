@@ -1,1 +1,1 @@
-# CocoBean - A Fast CPU Based Ray Tracer
+# TorpedoRay - A Fast CPU Based Ray Tracer

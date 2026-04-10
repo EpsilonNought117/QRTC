@@ -1,16 +1,17 @@
-#ifndef COCOBEAN_VEC3_HPP
-#define COCOBEAN_VEC3_HPP
+#ifndef TORPEDORAY_VEC3_HPP
+#define TORPEDORAY_VEC3_HPP
 
-#include "CocoBeanInternal.hpp"
+#include "TorpedoRayInternal.hpp"
 
 /**
  * Internal API Namespace
  */
-namespace CocoBeanInteral{
+namespace TRInternal
+{
 
 struct Vec3
 {
-    CBFloat x, y, z;
+    TRFloat x, y, z;
 };
 
 }

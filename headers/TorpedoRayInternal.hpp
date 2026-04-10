@@ -1,5 +1,5 @@
-#ifndef COCOBEAN_INTERNAL_HPP
-#define COCOBEAN_INTERNAL_HPP
+#ifndef TORPEDORAY_INTERNAL_HPP
+#define TORPEDORAY_INTERNAL_HPP
 
 // C++ Standard Headers
 #include <iostream>
@@ -24,12 +24,12 @@
         
             #include <immintrin.h>
             #include <intrin.h>
-            #define COCOBEAN_X64
+            #define TORPEDORAY_X64
         
         #elif defined(_M_ARM64) || defined(_M_ARM64EC)
         
             // TODO
-            #define COCOBEAN_ARM64
+            #define TORPEDORAY_ARM64
         
         #else
             #error "Unsupported CPU ISA on Windows and MSVC (Clang-cl can be used too)!"
@@ -50,13 +50,13 @@
         
             #include <cpuid.h>
             #include <immintrin.h>
-            #define COCOBEAN_X64
+            #define TORPEDORAY_X64
         
         #elif defined(__aarch64__) || defined(__arm64__)
         
             #include <arm_acle.h>
             #include <arm_neon.h>
-            #define COCOBEAN_ARM64
+            #define TORPEDORAY_ARM64
         
         #else
             #error "Unsupported CPU ISA on Linux/Unix/macOS and GCC/Clang!"
@@ -70,10 +70,15 @@
     #error "Unknown Platform!"
 #endif
 
-#if defined(CB_F64)
-    using CBFloat = double;
+namespace TRInternal
+{
+
+#if defined(TR_F64)
+    using TRFloat = double;
 #else
-    using CBFloat = float;
+    using TRFloat = float;
 #endif
 
-#endif
+}
+
+#endif // TORPEDORAY_INTERNAL_HPP

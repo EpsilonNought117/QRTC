@@ -1,11 +1,11 @@
-#ifndef COCOBEAN_COLOR_HPP
-#define COCOBEAN_COLOR_HPP
+#ifndef TORPEDORAY_COLOR_HPP
+#define TORPEDORAY_COLOR_HPP
 
-#include "CocoBeanInternal.hpp"
+#include "TorpedoRayInternal.hpp"
 
-namespace CocoBeanInternal
+namespace TorpedoRayInternal
 {
-
+    
 }
 
-#endif
+#endif // TORPEDORAY_COLOR_HPP
