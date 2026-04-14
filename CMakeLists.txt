@@ -115,6 +115,8 @@ set(QRTC_INTERNAL_SRC
 )
 
 set(QRTC_INTERNAL_HEADERS
+    
+    headers/image.hpp
     headers/rgb.hpp
     headers/vec3.hpp
     headers/qrtc_internal.hpp

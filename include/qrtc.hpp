@@ -6,6 +6,7 @@
 #include <memory>
 #include <fstream>
 #include <thread>
+#include <string>
 #include <atomic>
 
 // C Standard headers
