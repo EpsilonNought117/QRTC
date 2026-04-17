@@ -112,12 +112,15 @@ endif()
 # --- SOURCES -------------------------------------------------------------------
 
 set(QRTC_INTERNAL_SRC
+
+    src/image.cpp
 )
 
 set(QRTC_INTERNAL_HEADERS
     
+    headers/onb.hpp
     headers/image.hpp
-    headers/rgb.hpp
+    headers/RGB.hpp
     headers/vec3.hpp
     headers/qrtc_internal.hpp
 )

@@ -8,10 +8,13 @@
 #include <thread>
 #include <string>
 #include <atomic>
+#include <limits>
+#include <algorithm>
 
 // C Standard headers
 #include <cstdint>
 #include <cmath>
+#include <cstdint>
 
 /****************************************************************************************************/
 /**************************   COMPILER, OS and CPU-ISA SPECIFIC HEADERS   ***************************/

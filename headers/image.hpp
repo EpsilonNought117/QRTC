@@ -7,25 +7,30 @@
 namespace qrtc_internal
 {
 
-struct image
+struct Image
 {
-    unsigned int nx = 0U;
-    unsigned int ny = 0U;
-    std::shared_ptr<rgb3f[]> data = nullptr;
+    std::size_t nx = 0;
+    std::size_t ny = 0;
+    std::shared_ptr<RGB[]> data = nullptr;
 
-    image() = default;
-    image(unsigned int width, unsigned int height);
-    image(unsigned int width, unsigned int height, const rgb3f& background);
+    Image() = default;
+    Image(std::size_t width, std::size_t height);
+    Image(std::size_t width, std::size_t height, const RGB& background);
 
-    bool set(unsigned int x, unsigned int y, const rgb3f& color);
+    bool set(std::size_t x_coord, std::size_t y_coord, const RGB& color);
     void gamma_correct(float gamma);
 
-    
-    void write_ppm(std::ostream& out);
+    void write_ppm(std::ostream& out, bool is_P6);
     void read_ppm(std::string file_name);
+
+    ~Image()
+    {
+        nx = 0;
+        ny = 0;
+        // don't have to do anything for the data
+        // field as it's a std::unique_ptr
+    }
 };
-
-
 
 }
 
