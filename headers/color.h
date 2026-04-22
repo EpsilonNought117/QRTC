@@ -141,7 +141,7 @@ static inline void ClampColor(Color* c)
 /**
  * print color, assumes values are in [0, 1] range for floats
  */
-void PrintColor(FILE * restrict fp, const Color * restrict c, uint32_t maxval)
+void WriteColorToPPMFile(FILE * restrict fp, const Color * restrict c, uint32_t maxval)
 {
     QRTC_ALWAYS_ASSERT(fp != NULL);
     QRTC_ALWAYS_ASSERT(c != NULL);
