@@ -22,7 +22,13 @@ Sphere InitSphere(Point3 c, float r)
     return s;
 }
 
-bool HitSphere(const Sphere* s, const Ray* r, float ray_tmin, float ray_tmax, HitRecord* h_rec)
+bool HitSphere(
+    const Sphere* s, 
+    const Ray* r, 
+    float ray_tmin, 
+    float ray_tmax, 
+    HitRecord* h_rec
+)
 {
     Vec3 oc = SubVec3(&(s->center), &(r->orig));
     float a = LengthSquaredVec3(&(r->dir));

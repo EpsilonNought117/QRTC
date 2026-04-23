@@ -24,7 +24,13 @@ typedef struct Hittable
 
 } Hittable;
 
-bool Hit(const Hittable* hit_obj, const Ray* r, float ray_tmin, float ray_tmax, HitRecord* h_rec)
+bool Hit(
+    const Hittable* hit_obj, 
+    const Ray* r, 
+    float ray_tmin, 
+    float ray_tmax, 
+    HitRecord* h_rec
+)
 {
     switch (hit_obj->type)
     {
